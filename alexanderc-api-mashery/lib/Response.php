@@ -39,7 +39,7 @@ class Response
     {
         $this->validate($responseData);
 
-        foreach($this->attributes as $attribute) {
+        foreach ($this->attributes as $attribute) {
             $this->{$attribute} = $responseData[$attribute];
         }
     }
@@ -82,8 +82,8 @@ class Response
      */
     public function sync(InternalObjectInterface $object)
     {
-        foreach($object->getMasherySyncProperties() as $property) {
-            if($object->masheryUseSettersAndGetters()) {
+        foreach ($object->getMasherySyncProperties() as $property) {
+            if ($object->masheryUseSettersAndGetters()) {
                 $setter = sprintf("set%s", Inflector::classify($property));
 
                 $object->$setter($this->result[$property]);
@@ -101,8 +101,8 @@ class Response
      */
     protected function validate(array $responseData)
     {
-        foreach($this->attributes as $attribute) {
-            if(!array_key_exists($attribute, $responseData)) {
+        foreach ($this->attributes as $attribute) {
+            if (!array_key_exists($attribute, $responseData)) {
                 throw new InvalidResponseException("Missing attribute {$attribute} from response");
             }
         }

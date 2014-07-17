@@ -29,7 +29,7 @@ class JsonTransformer implements TransformerInterface
     {
         $data = @json_decode($raw, true);
 
-        if(null === $data) {
+        if (null === $data) {
             throw new TransformationException("Data can not be decoded: " . json_last_error());
         }
 

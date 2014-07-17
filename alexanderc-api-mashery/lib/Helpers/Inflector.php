@@ -169,7 +169,7 @@ class Inflector
     /**
      * Convert word in to the format for a Doctrine table name. Converts 'ModelName' to 'model_name'
      *
-     * @param  string $word  Word to tableize
+     * @param  string $word Word to tableize
      * @return string $word  Tableized word
      */
     public static function tableize($word)
@@ -180,7 +180,7 @@ class Inflector
     /**
      * Convert a word in to the format for a Doctrine class name. Converts 'table_name' to 'TableName'
      *
-     * @param string  $word  Word to classify
+     * @param string $word Word to classify
      * @return string $word  Classified word
      */
     public static function classify($word)

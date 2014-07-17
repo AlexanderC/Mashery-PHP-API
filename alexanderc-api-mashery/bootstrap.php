@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * @author AlexanderC <self@alexanderc.me>
  * @package MasheryApi
  */

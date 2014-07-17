@@ -30,7 +30,7 @@ class CurlTransport extends AbstractTransport
 
         curl_setopt_array($curlHandler, $options);
 
-        if(false === ($response = curl_exec($curlHandler))) {
+        if (false === ($response = curl_exec($curlHandler))) {
             throw new TransportException("An error occurred while executing the request: " . curl_error($curlHandler));
         }
 

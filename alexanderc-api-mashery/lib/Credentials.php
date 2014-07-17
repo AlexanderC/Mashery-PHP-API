@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * @author AlexanderC <self@alexanderc.me>
  * @package MasheryApi
  */
@@ -17,15 +17,15 @@ class Credentials
      */
     protected $application;
 
-	/**
-	 * @var string
-	 */
-	protected $apiKey;
+    /**
+     * @var string
+     */
+    protected $apiKey;
 
-	/**
-	 * @var string
-	 */
-	protected $secret;
+    /**
+     * @var string
+     */
+    protected $secret;
 
     /**
      * @var DefinitionInterface
@@ -43,11 +43,11 @@ class Credentials
      * @param string $application
      */
     public function __construct($apiKey, $secret, $application)
-	{
-		$this->apiKey = $apiKey;
-		$this->secret = $secret;
+    {
+        $this->apiKey = $apiKey;
+        $this->secret = $secret;
         $this->application = $application;
-	}
+    }
 
     /**
      * @param \AlexanderC\Api\Mashery\Definition\DefinitionInterface $definition
@@ -71,7 +71,7 @@ class Credentials
      */
     public function getAuthParameters()
     {
-        if(!($this->definition instanceof DefinitionInterface)) {
+        if (!($this->definition instanceof DefinitionInterface)) {
             throw new \RuntimeException("You should inject definition first");
         }
 
@@ -96,7 +96,7 @@ class Credentials
     public function isSignatureValid($signature)
     {
         return isset($this->signatures[$signature])
-                && ($this->signatures[$signature] + $this->definition->getSignatureLifetime()) < gmdate('U');
+        && ($this->signatures[$signature] + $this->definition->getSignatureLifetime()) < gmdate('U');
     }
 
     /**

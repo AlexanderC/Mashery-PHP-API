@@ -96,7 +96,7 @@ class Client
      */
     public function setSandboxMode($sandbox)
     {
-        $this->sandboxMode = (bool) $sandbox;
+        $this->sandboxMode = (bool)$sandbox;
     }
 
     /**

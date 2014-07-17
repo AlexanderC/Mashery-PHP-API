@@ -19,11 +19,11 @@ trait ExtendedClientTrait
      */
     public function fetch($objectType, array $parameters = [])
     {
-        if($objectType instanceof InternalObjectInterface) {
+        if ($objectType instanceof InternalObjectInterface) {
             $this->validateObjectType($objectType->getMasheryObjectType());
 
-            foreach($objectType->getMasherySyncProperties() as $property) {
-                if($objectType->masheryUseSettersAndGetters()) {
+            foreach ($objectType->getMasherySyncProperties() as $property) {
+                if ($objectType->masheryUseSettersAndGetters()) {
                     $getter = sprintf("get%s", Inflector::classify($property));
 
                     $parameters[$property] = $objectType->$getter();
@@ -53,11 +53,11 @@ trait ExtendedClientTrait
      */
     public function create($objectType, array $parameters = [])
     {
-        if($objectType instanceof InternalObjectInterface) {
+        if ($objectType instanceof InternalObjectInterface) {
             $this->validateObjectType($objectType->getMasheryObjectType());
 
-            foreach($objectType->getMasherySyncProperties() as $property) {
-                if($objectType->masheryUseSettersAndGetters()) {
+            foreach ($objectType->getMasherySyncProperties() as $property) {
+                if ($objectType->masheryUseSettersAndGetters()) {
                     $getter = sprintf("get%s", Inflector::classify($property));
 
                     $parameters[$property] = $objectType->$getter();
@@ -87,11 +87,11 @@ trait ExtendedClientTrait
      */
     public function update($objectType, array $parameters = [])
     {
-        if($objectType instanceof InternalObjectInterface) {
+        if ($objectType instanceof InternalObjectInterface) {
             $this->validateObjectType($objectType->getMasheryObjectType());
 
-            foreach($objectType->getMasherySyncProperties() as $property) {
-                if($objectType->masheryUseSettersAndGetters()) {
+            foreach ($objectType->getMasherySyncProperties() as $property) {
+                if ($objectType->masheryUseSettersAndGetters()) {
                     $getter = sprintf("get%s", Inflector::classify($property));
 
                     $parameters[$property] = $objectType->$getter();
@@ -121,11 +121,11 @@ trait ExtendedClientTrait
      */
     public function delete($objectType, array $parameters = [])
     {
-        if($objectType instanceof InternalObjectInterface) {
+        if ($objectType instanceof InternalObjectInterface) {
             $this->validateObjectType($objectType->getMasheryObjectType());
 
-            foreach($objectType->getMasherySyncProperties() as $property) {
-                if($objectType->masheryUseSettersAndGetters()) {
+            foreach ($objectType->getMasherySyncProperties() as $property) {
+                if ($objectType->masheryUseSettersAndGetters()) {
                     $getter = sprintf("get%s", Inflector::classify($property));
 
                     $parameters[$property] = $objectType->$getter();
@@ -156,11 +156,11 @@ trait ExtendedClientTrait
      */
     public function validate($objectType, array $parameters = [], &$error)
     {
-        if($objectType instanceof InternalObjectInterface) {
+        if ($objectType instanceof InternalObjectInterface) {
             $this->validateObjectType($objectType->getMasheryObjectType());
 
-            foreach($objectType->getMasherySyncProperties() as $property) {
-                if($objectType->masheryUseSettersAndGetters()) {
+            foreach ($objectType->getMasherySyncProperties() as $property) {
+                if ($objectType->masheryUseSettersAndGetters()) {
                     $getter = sprintf("get%s", Inflector::classify($property));
 
                     $parameters[$property] = $objectType->$getter();
@@ -195,7 +195,7 @@ trait ExtendedClientTrait
     {
         $isValidObject = !is_string($objectType) || in_array($objectType, $this->definition->getObjectTypes());
 
-        if(!$isValidObject) {
+        if (!$isValidObject) {
             throw new UnknownObjectTypeException("Unknown object type provided");
         }
     }

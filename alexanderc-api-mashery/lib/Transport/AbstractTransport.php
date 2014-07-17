@@ -60,7 +60,7 @@ abstract class AbstractTransport
      */
     public function request(array $data, $sandboxMode = false)
     {
-        if(false === $this->init) {
+        if (false === $this->init) {
             throw new \RuntimeException("You should inject services first");
         }
 

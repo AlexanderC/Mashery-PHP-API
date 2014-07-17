@@ -19,31 +19,9 @@ trait ExtendedClientTrait
      */
     public function fetch($objectType, array $parameters = [])
     {
-        if ($objectType instanceof InternalObjectInterface) {
-            $this->validateObjectType($objectType->getMasheryObjectType());
-
-            foreach ($objectType->getMasherySyncProperties() as $property) {
-                if ($objectType->masheryUseSettersAndGetters()) {
-                    $getter = sprintf("get%s", Inflector::classify($property));
-
-                    $parameters[$property] = $objectType->$getter();
-                } else {
-                    $parameters[$property] = $objectType->{$property};
-                }
-            }
-
-            $response = new Response(
-                $this->call(sprintf("%s.fetch", $objectType->getMasheryObjectType()), $parameters)
-            );
-
-            $response->sync($objectType);
-
-            return $response;
-        } else {
-            $this->validateObjectType($objectType);
-
-            return new Response($this->call(sprintf("%s.fetch", $objectType), $parameters));
-        }
+        return $objectType instanceof InternalObjectInterface
+            ? $this->executeFromObject($objectType, 'fetch', false)
+            : $this->execute($objectType, 'fetch', $parameters);
     }
 
     /**
@@ -53,31 +31,9 @@ trait ExtendedClientTrait
      */
     public function create($objectType, array $parameters = [])
     {
-        if ($objectType instanceof InternalObjectInterface) {
-            $this->validateObjectType($objectType->getMasheryObjectType());
-
-            foreach ($objectType->getMasherySyncProperties() as $property) {
-                if ($objectType->masheryUseSettersAndGetters()) {
-                    $getter = sprintf("get%s", Inflector::classify($property));
-
-                    $parameters[$property] = $objectType->$getter();
-                } else {
-                    $parameters[$property] = $objectType->{$property};
-                }
-            }
-
-            $response = new Response(
-                $this->call(sprintf("%s.create", $objectType->getMasheryObjectType()), $parameters)
-            );
-
-            $response->sync($objectType);
-
-            return $response;
-        } else {
-            $this->validateObjectType($objectType);
-
-            return new Response($this->call(sprintf("%s.create", $objectType), $parameters));
-        }
+        return $objectType instanceof InternalObjectInterface
+            ? $this->executeFromObject($objectType, 'create', false)
+            : $this->execute($objectType, 'create', $parameters);
     }
 
     /**
@@ -87,31 +43,9 @@ trait ExtendedClientTrait
      */
     public function update($objectType, array $parameters = [])
     {
-        if ($objectType instanceof InternalObjectInterface) {
-            $this->validateObjectType($objectType->getMasheryObjectType());
-
-            foreach ($objectType->getMasherySyncProperties() as $property) {
-                if ($objectType->masheryUseSettersAndGetters()) {
-                    $getter = sprintf("get%s", Inflector::classify($property));
-
-                    $parameters[$property] = $objectType->$getter();
-                } else {
-                    $parameters[$property] = $objectType->{$property};
-                }
-            }
-
-            $response = new Response(
-                $this->call(sprintf("%s.update", $objectType->getMasheryObjectType()), $parameters)
-            );
-
-            $response->sync($objectType);
-
-            return $response;
-        } else {
-            $this->validateObjectType($objectType);
-
-            return new Response($this->call(sprintf("%s.update", $objectType), $parameters));
-        }
+        return $objectType instanceof InternalObjectInterface
+            ? $this->executeFromObject($objectType, 'update', false)
+            : $this->execute($objectType, 'update', $parameters);
     }
 
     /**
@@ -121,70 +55,68 @@ trait ExtendedClientTrait
      */
     public function delete($objectType, array $parameters = [])
     {
-        if ($objectType instanceof InternalObjectInterface) {
-            $this->validateObjectType($objectType->getMasheryObjectType());
-
-            foreach ($objectType->getMasherySyncProperties() as $property) {
-                if ($objectType->masheryUseSettersAndGetters()) {
-                    $getter = sprintf("get%s", Inflector::classify($property));
-
-                    $parameters[$property] = $objectType->$getter();
-                } else {
-                    $parameters[$property] = $objectType->{$property};
-                }
-            }
-
-            $response = new Response(
-                $this->call(sprintf("%s.delete", $objectType->getMasheryObjectType()), $parameters)
-            );
-
-            $response->sync($objectType);
-
-            return $response;
-        } else {
-            $this->validateObjectType($objectType);
-
-            return new Response($this->call(sprintf("%s.delete", $objectType), $parameters));
-        }
+        return $objectType instanceof InternalObjectInterface
+            ? $this->executeFromObject($objectType, 'delete', false)
+            : $this->execute($objectType, 'delete', $parameters);
     }
 
     /**
      * @param string $objectType
      * @param array $parameters
-     * @param array $error
+     * @param Response $response
      * @return bool
      */
-    public function validate($objectType, array $parameters = [], &$error)
+    public function validate($objectType, array $parameters = [], &$response)
     {
-        if ($objectType instanceof InternalObjectInterface) {
-            $this->validateObjectType($objectType->getMasheryObjectType());
+        $response = $objectType instanceof InternalObjectInterface
+            ? $this->executeFromObject($objectType, 'validate', false)
+            : $this->execute($objectType, 'validate', $parameters);
 
-            foreach ($objectType->getMasherySyncProperties() as $property) {
-                if ($objectType->masheryUseSettersAndGetters()) {
-                    $getter = sprintf("get%s", Inflector::classify($property));
+        return true === $response->getResult();
+    }
 
-                    $parameters[$property] = $objectType->$getter();
-                } else {
-                    $parameters[$property] = $objectType->{$property};
-                }
+    /**
+     * @param string $objectType
+     * @param string $type
+     * @param array $parameters
+     * @return Response
+     */
+    protected function execute($objectType, $type, array $parameters = [])
+    {
+        $this->validateObjectType($objectType);
+
+        return new Response($this->call(sprintf("%s.%s", $objectType, $type), $parameters));
+    }
+
+    /**
+     * @param InternalObjectInterface $object
+     * @param string $type
+     * @param bool $withSync
+     * @return Response
+     */
+    protected function executeFromObject($object, $type, $withSync = true)
+    {
+        $this->validateObjectType($object->getMasheryObjectType());
+
+        foreach ($object->getMasherySyncProperties() as $property) {
+            if ($object->masheryUseSettersAndGetters()) {
+                $getter = sprintf("get%s", Inflector::classify($property));
+
+                $parameters[$property] = $object->$getter();
+            } else {
+                $parameters[$property] = $object->{$property};
             }
-
-            $response = new Response(
-                $this->call(sprintf("%s.validate", $objectType->getMasheryObjectType()), $parameters)
-            );
-
-            $error = $response->getError();
-
-            return true === $response->getResult();
-        } else {
-            $this->validateObjectType($objectType);
-
-            $response = new Response($this->call(sprintf("%s.validate", $objectType), $parameters));
-
-            $error = $response->getError();
-
-            return true === $response->getResult();
         }
+
+        $response = new Response(
+            $this->call(sprintf("%s.%s", $object->getMasheryObjectType(), $type), $parameters)
+        );
+
+        if($withSync) {
+            $response->sync($object);
+        }
+
+        return $response;
     }
 
     /**

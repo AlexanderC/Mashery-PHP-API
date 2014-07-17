@@ -1,0 +1,21 @@
+{
+    "name": "alexanderc/mashery-php-api",
+    "description": "Mashery API PHP library",
+    "license": "Apache Version 2",
+    "authors": [
+        {
+            "name": "AlexanderC",
+            "email": "alexander.moldova@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "AlexanderC\\Api\\Mashery\\": "alexanderc-api-mashery/lib/"
+        }
+    }
+
+}

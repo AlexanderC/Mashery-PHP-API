@@ -27,7 +27,7 @@ Usage
      * `QueryResponse query(string|MsrQL $query)`
      * `array call(string $method, array $parameters)`
 
-- MsrQL Methods
+- MsrQL Methods (Mashery Query Language)
      * `MsrQL select(string $selector)`
      * `MsrQL from(string $object)`
      * `MsrQL where(string $expression)`

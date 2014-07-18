@@ -13,7 +13,7 @@ use AlexanderC\Api\Mashery\Exception\UnknownObjectTypeException;
 trait ExtendedClientTrait
 {
     /**
-     * @param string $objectType
+     * @param string|InternalObjectInterface $objectType
      * @param array $parameters
      * @return mixed
      */
@@ -25,7 +25,7 @@ trait ExtendedClientTrait
     }
 
     /**
-     * @param string $objectType
+     * @param string|InternalObjectInterface $objectType
      * @param array $parameters
      * @return mixed
      */
@@ -37,7 +37,7 @@ trait ExtendedClientTrait
     }
 
     /**
-     * @param string $objectType
+     * @param string|InternalObjectInterface $objectType
      * @param array $parameters
      * @return mixed
      */
@@ -49,7 +49,7 @@ trait ExtendedClientTrait
     }
 
     /**
-     * @param string $objectType
+     * @param string|InternalObjectInterface $objectType
      * @param array $parameters
      * @return mixed
      */
@@ -61,7 +61,7 @@ trait ExtendedClientTrait
     }
 
     /**
-     * @param string $objectType
+     * @param string|InternalObjectInterface $objectType
      * @param array $parameters
      * @param Response $response
      * @return bool
@@ -73,6 +73,15 @@ trait ExtendedClientTrait
             : $this->execute($objectType, 'validate', $parameters);
 
         return true === $response->getResult();
+    }
+
+    /**
+     * @param string|MsrQL $query
+     * @return QueryResponse
+     */
+    public function query($query)
+    {
+        return new QueryResponse($this->call('object.query', [(string) $query]));
     }
 
     /**

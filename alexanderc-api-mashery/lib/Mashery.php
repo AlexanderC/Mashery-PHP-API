@@ -9,6 +9,15 @@ namespace AlexanderC\Api\Mashery;
 
 use AlexanderC\Api\Mashery\Transport\AbstractTransport;
 
+/**
+ * @method Response fetch(string $objectType, array $parameters = [])
+ * @method Response create(string $objectType, array $parameters = [])
+ * @method Response update(string $objectType, array $parameters = [])
+ * @method Response delete(string $objectType, array $parameters = [])
+ * @method bool validate(string $objectType, array $parameters = [], &$response)
+ * @method QueryResponse query($query)
+ * @method array call(string $method, array $parameters)
+ */
 class Mashery
 {
     const DEFAULT_VERSION = 'version2';
@@ -96,5 +105,17 @@ class Mashery
         $definitionClass = sprintf('AlexanderC\Api\Mashery\Definition\%sDefinition', ucfirst($version));
 
         return new $definitionClass;
+    }
+
+    /**
+     * Proxy all calls to our client
+     *
+     * @param string $name
+     * @param array $arguments
+     * @return mixed
+     */
+    public function __call($name, array $arguments)
+    {
+        return call_user_func_array([$this->client, $name], $arguments);
     }
 }

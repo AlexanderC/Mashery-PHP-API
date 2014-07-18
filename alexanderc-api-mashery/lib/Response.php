@@ -7,11 +7,12 @@
 
 namespace AlexanderC\Api\Mashery;
 
-use AlexanderC\Api\Mashery\Exception\InvalidResponseException;
 use AlexanderC\Api\Mashery\Helpers\Inflector;
 
 class Response
 {
+    use ResponseDataValidator;
+
     /**
      * @var array
      */
@@ -21,6 +22,11 @@ class Response
      * @var array|null
      */
     protected $error;
+
+    /**
+     * @var null|ErrorObject
+     */
+    protected $errorObject;
 
     /**
      * @var array|bool|null
@@ -42,6 +48,10 @@ class Response
         foreach ($this->attributes as $attribute) {
             $this->{$attribute} = $responseData[$attribute];
         }
+
+        if(null !== $this->error) {
+            $this->errorObject = $this->error;
+        }
     }
 
     /**
@@ -53,9 +63,17 @@ class Response
     }
 
     /**
-     * @return array|null
+     * @return mixed
      */
     public function getError()
+    {
+        return $this->errorObject;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getErrorData()
     {
         return $this->error;
     }
@@ -93,18 +111,5 @@ class Response
         }
 
         return $object;
-    }
-
-    /**
-     * @param array $responseData
-     * @throws Exception\InvalidResponseException
-     */
-    protected function validate(array $responseData)
-    {
-        foreach ($this->attributes as $attribute) {
-            if (!array_key_exists($attribute, $responseData)) {
-                throw new InvalidResponseException("Missing attribute {$attribute} from response");
-            }
-        }
     }
 }

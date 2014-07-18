@@ -30,6 +30,11 @@ class Client
     protected $transformer;
 
     /**
+     * @var Definition\DefinitionInterface
+     */
+    protected $definition;
+
+    /**
      * @var bool
      */
     protected $sandboxMode;
@@ -46,9 +51,10 @@ class Client
     {
         $this->transport = $transport;
         $this->credentials = $credentials;
+        $this->definition = $definition;
         $this->transformer = $this->createTransformer($definition);
 
-        $transport->init($this->credentials, $definition, $this->transformer);
+        $transport->init($this->credentials, $this->definition, $this->transformer);
     }
 
     /**

@@ -10,6 +10,7 @@ namespace AlexanderC\Api\Mashery\Transport;
 use AlexanderC\Api\Mashery\Credentials;
 use AlexanderC\Api\Mashery\Definition\DefinitionInterface;
 use AlexanderC\Api\Mashery\Transformer\TransformerInterface;
+use AlexanderC\Api\Mashery\Transport\Exception\AuthorizationException;
 
 abstract class AbstractTransport
 {
@@ -79,14 +80,21 @@ abstract class AbstractTransport
             $body
         ];
 
-        return $this->transformer->decode($this->__request($url, $headers));
+        $data = $this->transformer->decode($this->__request($url, $headers, $authorizationError));
+
+        if($authorizationError) {
+            throw new AuthorizationException($data);
+        }
+
+        return $data;
     }
 
     /**
      * @param string $url
      * @param array $headers
+     * @param bool $authorizationError
      * @return string
      * @throws Exception\TransportException
      */
-    abstract protected function __request($url, array $headers);
+    abstract protected function __request($url, array $headers, &$authorizationError);
 }

@@ -56,7 +56,7 @@ trait ExtendedClientTrait
     public function delete($objectType, array $parameters = [])
     {
         return $objectType instanceof InternalObjectInterface
-            ? $this->executeFromObject($objectType, 'delete')
+            ? $this->executeFromObject($objectType, 'delete', false)
             : $this->execute($objectType, 'delete', $parameters);
     }
 

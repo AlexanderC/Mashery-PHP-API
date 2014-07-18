@@ -126,5 +126,5 @@ Features
 TODO
 ====
 - Add tests
-- Implement version 3 of API
+- Implement API version 3
 - Build Symfony2 bundle

@@ -31,7 +31,7 @@ class MsrQL
     /**
      * @var string
      */
-    protected $expressionPartLeftRegex = '(?:[\w]+)';
+    protected $expressionPartLeftRegex = '(?:[\w\.]+)';
 
     /**
      * @var string

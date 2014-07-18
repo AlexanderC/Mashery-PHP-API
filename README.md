@@ -19,13 +19,13 @@ Installation
 Usage
 =====
 - API Methods:
-     * `@method Response fetch(string|InternalObjectInterface $objectType, array $parameters = [])`
-     * `@method Response create(string|InternalObjectInterface $objectType, array $parameters = [])`
-     * `@method Response update(string|InternalObjectInterface $objectType, array $parameters = [])`
-     * `@method Response delete(string|InternalObjectInterface $objectType, array $parameters = [])`
-     * `@method bool validate(string|InternalObjectInterface $objectType, array $parameters = [], Response &$response)`
-     * `@method QueryResponse query(string|MsrQL $query)`
-     * `@method array call(string $method, array $parameters)`
+     * `Response fetch(string|InternalObjectInterface $objectType, array $parameters = [])`
+     * `Response create(string|InternalObjectInterface $objectType, array $parameters = [])`
+     * `Response update(string|InternalObjectInterface $objectType, array $parameters = [])`
+     * `Response delete(string|InternalObjectInterface $objectType, array $parameters = [])`
+     * `bool validate(string|InternalObjectInterface $objectType, array $parameters = [], Response &$response)`
+     * `QueryResponse query(string|MsrQL $query)`
+     * `array call(string $method, array $parameters)`
 
 - MsrQL Methods
      * `MsrQL select(string $selector)`

@@ -114,8 +114,16 @@ In order to integrate and use your objects as native ones- you should implement 
 
 ***Note: By calling any methods except query and validate using InternalObjectInterface as first argument- you'll get objects syncronized automatically***
 
+Features
+========
+- Easy to use and customize
+- Nearly zero configuration
+- No dependencies
+- Well documented
+- ...
+
 TODO
 ====
 - Add tests
-- Implement version 3
+- Implement version 3 of API
 - Build Symfony2 bundle

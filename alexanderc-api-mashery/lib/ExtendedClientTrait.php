@@ -20,7 +20,7 @@ trait ExtendedClientTrait
     public function fetch($objectType, array $parameters = [])
     {
         return $objectType instanceof InternalObjectInterface
-            ? $this->executeFromObject($objectType, 'fetch', false)
+            ? $this->executeFromObject($objectType, 'fetch')
             : $this->execute($objectType, 'fetch', $parameters);
     }
 
@@ -32,7 +32,7 @@ trait ExtendedClientTrait
     public function create($objectType, array $parameters = [])
     {
         return $objectType instanceof InternalObjectInterface
-            ? $this->executeFromObject($objectType, 'create', false)
+            ? $this->executeFromObject($objectType, 'create')
             : $this->execute($objectType, 'create', $parameters);
     }
 
@@ -44,7 +44,7 @@ trait ExtendedClientTrait
     public function update($objectType, array $parameters = [])
     {
         return $objectType instanceof InternalObjectInterface
-            ? $this->executeFromObject($objectType, 'update', false)
+            ? $this->executeFromObject($objectType, 'update')
             : $this->execute($objectType, 'update', $parameters);
     }
 
@@ -56,7 +56,7 @@ trait ExtendedClientTrait
     public function delete($objectType, array $parameters = [])
     {
         return $objectType instanceof InternalObjectInterface
-            ? $this->executeFromObject($objectType, 'delete', false)
+            ? $this->executeFromObject($objectType, 'delete')
             : $this->execute($objectType, 'delete', $parameters);
     }
 

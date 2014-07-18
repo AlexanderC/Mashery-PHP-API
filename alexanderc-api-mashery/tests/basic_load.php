@@ -9,7 +9,7 @@ require __DIR__ . '/../bootstrap.php';
 
 $apiKey = 'test';
 $secret = 'test';
-$application = 'hearstlab';
+$application = 'alexanderc';
 $transportName = 'curl'; // default value
 $version = 'version2'; // default value
 

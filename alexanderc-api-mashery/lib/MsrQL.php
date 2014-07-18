@@ -111,12 +111,12 @@ class MsrQL
     }
 
     /**
-     * @param string $table
+     * @param string $object
      * @return $this
      */
-    public function from($table)
+    public function from($object)
     {
-        $this->table = $table;
+        $this->table = $object;
 
         return $this;
     }

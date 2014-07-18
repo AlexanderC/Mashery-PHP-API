@@ -96,9 +96,10 @@ try {
 
     // also you can use Mashery SQL like language for custom queries
     // or build it using MsrQL class
-    $query = \AlexanderC\Api\Mashery\MsrQL::create();
-    $query->from('role');
-    $query->where('name = "testit"');
+    $query = \AlexanderC\Api\Mashery\MsrQL::create()
+                ->from('role');
+                ->where('name = "testit"')
+    ;
 
     // you should get result here
     var_dump($mashery->query($query));

@@ -15,7 +15,12 @@ class ErrorObject
     /**
      * @var array
      */
-    protected $attributes = ['message', 'code', 'data'];
+    protected $attributes = ['message', 'code'];
+
+    /**
+     * @var array
+     */
+    protected $nonMandatoryAttributes = ['data'];
 
     /**
      * @var string
@@ -43,6 +48,9 @@ class ErrorObject
             $this->{$attribute} = $errorData[$attribute];
         }
 
+        foreach ($this->nonMandatoryAttributes as $attribute) {
+            $this->{$attribute} = isset($errorData[$attribute]) ? $errorData[$attribute] : null;
+        }
     }
 
     /**

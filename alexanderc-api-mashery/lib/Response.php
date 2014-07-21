@@ -59,7 +59,7 @@ class Response
      */
     public function isError()
     {
-        return null === $this->error;
+        return null !== $this->error;
     }
 
     /**

@@ -107,7 +107,7 @@ class MsrQL
     public function select($selector)
     {
         $this->type = self::SELECT;
-        $this->selector = Inflector::pluralize($selector);
+        $this->selector = $selector;
 
         return $this;
     }
@@ -118,7 +118,11 @@ class MsrQL
      */
     public function from($object)
     {
-        $this->table = $object;
+        $this->table = Inflector::pluralize(
+            $object instanceof InternalObjectInterface
+                ? $object->getMasheryObjectType()
+                : (string) $object
+        );
 
         return $this;
     }

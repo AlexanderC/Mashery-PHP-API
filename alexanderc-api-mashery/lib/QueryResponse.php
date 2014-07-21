@@ -15,6 +15,6 @@ class QueryResponse extends Response
      */
     public function getResult()
     {
-        return new QueryResult($this->result);
+        return is_array($this->result) ? new QueryResult($this->result) : $this->result;
     }
 } 

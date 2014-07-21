@@ -1,9 +1,8 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: AlexanderC <self@alexanderc.me>
- * Date: 7/17/14
- * Time: 18:15
+ * @author AlexanderC <self@alexanderc.me>
+ * @package MasheryApi
  */
 
 namespace AlexanderC\Api\Mashery\Helpers;

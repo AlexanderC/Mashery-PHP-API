@@ -121,6 +121,7 @@ Features
 - No dependencies
 - Well documented
 - Query builder with some advanced validation to avoid extra API calls
+- Automated pluralization of object types in query builder
 - ...
 
 TODO

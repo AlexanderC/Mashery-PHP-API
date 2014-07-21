@@ -127,4 +127,4 @@ TODO
 ====
 - Add tests
 - Implement API version 3
-- ---Build Symfony2 bundle--- [Here it is ;)](https://github.com/AlexanderC/Mashery-PHP-API-Bundle)
+- <del>Build Symfony2 bundle</del> [Here it is ;)](https://github.com/AlexanderC/Mashery-PHP-API-Bundle)

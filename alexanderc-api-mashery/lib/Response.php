@@ -24,7 +24,7 @@ class Response
     protected $error;
 
     /**
-     * @var null|ErrorObject
+     * @var ErrorObject
      */
     protected $errorObject;
 
@@ -50,7 +50,7 @@ class Response
         }
 
         if(null !== $this->error) {
-            $this->errorObject = $this->error;
+            $this->errorObject = new ErrorObject($this->error);
         }
     }
 
@@ -63,7 +63,7 @@ class Response
     }
 
     /**
-     * @return mixed
+     * @return ErrorObject
      */
     public function getError()
     {

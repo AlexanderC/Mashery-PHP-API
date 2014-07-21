@@ -9,6 +9,7 @@ namespace AlexanderC\Api\Mashery\Transport;
 
 
 use AlexanderC\Api\Mashery\Transport\Exception\AuthorizationException;
+use AlexanderC\Api\Mashery\Transport\Exception\NotFoundException;
 use AlexanderC\Api\Mashery\Transport\Exception\TransportException;
 
 class CurlTransport extends AbstractTransport
@@ -39,6 +40,8 @@ class CurlTransport extends AbstractTransport
             throw new TransportException("An error occurred while executing the request: " . curl_error($curlHandler));
         } elseif(403 === $statusCode) {
             $authorizationError = true;
+        } elseif(404 === $statusCode) {
+            throw new NotFoundException("Url {$url} does not exists. Check your application identifier");
         }
 
         return $response;

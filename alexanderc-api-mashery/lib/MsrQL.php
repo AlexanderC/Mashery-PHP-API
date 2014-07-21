@@ -8,6 +8,8 @@
 namespace AlexanderC\Api\Mashery;
 
 
+use AlexanderC\Api\Mashery\Helpers\Inflector;
+
 class MsrQL
 {
     const DEFAULT_SELECTOR = '*';
@@ -105,7 +107,7 @@ class MsrQL
     public function select($selector)
     {
         $this->type = self::SELECT;
-        $this->selector = $selector;
+        $this->selector = Inflector::pluralize($selector);
 
         return $this;
     }

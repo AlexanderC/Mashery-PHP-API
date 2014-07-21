@@ -97,7 +97,7 @@ try {
     // also you can use Mashery SQL like language for custom queries
     // or build it using MsrQL class
     $query = \AlexanderC\Api\Mashery\MsrQL::create()
-                ->from('role');
+                ->from('role'); // will be automatically transformed to roles
                 ->where('name = "testit"')
     ;
 

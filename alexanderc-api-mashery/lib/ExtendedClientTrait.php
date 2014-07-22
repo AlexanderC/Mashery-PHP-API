@@ -16,19 +16,19 @@ trait ExtendedClientTrait
     /**
      * @param string|InternalObjectInterface $objectType
      * @param array $parameters
-     * @return mixed
+     * @return Response
      */
     public function fetch($objectType, array $parameters = [])
     {
         return $objectType instanceof InternalObjectInterface
-            ? $this->executeFromObject($objectType, 'fetch')
+            ? $this->executeFromObject($objectType, 'fetch', true, true)
             : $this->execute($objectType, 'fetch', $parameters);
     }
 
     /**
      * @param string|InternalObjectInterface $objectType
      * @param array $parameters
-     * @return mixed
+     * @return Response
      */
     public function create($objectType, array $parameters = [])
     {
@@ -40,7 +40,7 @@ trait ExtendedClientTrait
     /**
      * @param string|InternalObjectInterface $objectType
      * @param array $parameters
-     * @return mixed
+     * @return Response
      */
     public function update($objectType, array $parameters = [])
     {
@@ -52,7 +52,7 @@ trait ExtendedClientTrait
     /**
      * @param string|InternalObjectInterface $objectType
      * @param array $parameters
-     * @return mixed
+     * @return Response
      */
     public function delete($objectType, array $parameters = [])
     {
@@ -64,16 +64,15 @@ trait ExtendedClientTrait
     /**
      * @param string|InternalObjectInterface $objectType
      * @param array $parameters
-     * @param Response $response
-     * @return bool
+     * @return Response
      */
-    public function validate($objectType, array $parameters = [], &$response)
+    public function validate($objectType, array $parameters = [])
     {
         $response = $objectType instanceof InternalObjectInterface
             ? $this->executeFromObject($objectType, 'validate', false)
             : $this->execute($objectType, 'validate', $parameters);
 
-        return true === $response->getResult();
+        return $response;
     }
 
     /**

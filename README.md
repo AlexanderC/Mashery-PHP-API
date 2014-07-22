@@ -23,7 +23,7 @@ Usage
      * `Response create(string|InternalObjectInterface $objectType, array $parameters = [])`
      * `Response update(string|InternalObjectInterface $objectType, array $parameters = [])`
      * `Response delete(string|InternalObjectInterface $objectType, array $parameters = [])`
-     * `bool validate(string|InternalObjectInterface $objectType, array $parameters = [], Response &$response)`
+     * `Response validate(string|InternalObjectInterface $objectType, array $parameters = [])`
      * `QueryResponse query(string|MsrQL $query)`
      * `array call(string $method, array $parameters)`
 

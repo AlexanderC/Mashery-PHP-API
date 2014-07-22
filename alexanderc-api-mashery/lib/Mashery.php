@@ -14,7 +14,7 @@ use AlexanderC\Api\Mashery\Transport\AbstractTransport;
  * @method Response create(string $objectType, array $parameters = [])
  * @method Response update(string $objectType, array $parameters = [])
  * @method Response delete(string $objectType, array $parameters = [])
- * @method bool validate(string $objectType, array $parameters = [], &$response)
+ * @method Response validate(string $objectType, array $parameters = [])
  * @method QueryResponse query(string $query)
  * @method array call(string $method, array $parameters)
  */

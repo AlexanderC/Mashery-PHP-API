@@ -119,7 +119,7 @@ trait ExtendedClientTrait
             )
         );
 
-        if($withSync) {
+        if($withSync && !$response->isError()) {
             $response->sync($object);
         }
 

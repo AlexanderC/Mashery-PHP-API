@@ -63,17 +63,20 @@ class ObjectSyncer
     public static function sync(InternalObjectInterface $object, array $data)
     {
         foreach (self::getRealPropertiesMap($object) as $objectProperty => $masheryProperty) {
+            // fix missing mashery property value (ex. id for member object)
+            $masheryPropertyValue = isset($data[$masheryProperty]) ? $data[$masheryProperty] : null;
+
             if ($object->masheryUseSettersAndGetters()) {
                 $setter = sprintf("set%s", Inflector::classify($objectProperty));
 
                 // be sure it is available (ex. orm entity id)
                 if(method_exists($object, $setter)) {
                     $object->$setter(
-                        self::castIncoming($object, $objectProperty, $data[$masheryProperty])
+                        self::castIncoming($object, $objectProperty, $masheryPropertyValue)
                     );
                 }
             } else {
-                $object->{$objectProperty} = self::castIncoming($object, $objectProperty, $data[$masheryProperty]);
+                $object->{$objectProperty} = self::castIncoming($object, $objectProperty, $masheryPropertyValue);
             }
         }
 

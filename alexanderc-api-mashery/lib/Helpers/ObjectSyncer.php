@@ -32,7 +32,7 @@ class ObjectSyncer
      * @param InternalObjectInterface $object
      * @return array
      */
-    public static function & arrayProperties(InternalObjectInterface $object)
+    public static function arrayProperties(InternalObjectInterface $object)
     {
         $properties = [];
 

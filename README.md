@@ -80,7 +80,7 @@ class TestObject implements \AlexanderC\Api\Mashery\InternalObjectInterface
 }
 
 try {
-    $mashery = AlexanderC\Api\Mashery\Mashery::create(
+    $mashery = AlexanderC\Api\Mashery\Mashery::createInstance(
         $apiKey, $secret, $application, $transportName, $version
     );
 

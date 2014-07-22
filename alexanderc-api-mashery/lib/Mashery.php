@@ -62,7 +62,9 @@ class Mashery
      * @param string $version
      * @return Mashery
      */
-    public static function create($apiKey, $secret, $application, $transportName = 'curl', $version = self::DEFAULT_VERSION)
+    public static function createInstance(
+        $apiKey, $secret, $application,
+        $transportName = 'curl', $version = self::DEFAULT_VERSION)
     {
         $transportClass = sprintf('AlexanderC\Api\Mashery\Transport\%sTransport', ucfirst($transportName));
         $transport = new $transportClass;

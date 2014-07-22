@@ -14,7 +14,7 @@ $transportName = 'curl'; // default value
 $version = 'version2'; // default value
 
 try {
-    $mashery = AlexanderC\Api\Mashery\Mashery::create(
+    $mashery = AlexanderC\Api\Mashery\Mashery::createInstance(
         $apiKey, $secret, $application, $transportName, $version
     );
 

@@ -14,7 +14,7 @@ class Version2Definition implements DefinitionInterface
      */
     public function getServer()
     {
-        return "http://api.mashery.com/v2/json-rpc";
+        return "https://api.mashery.com/v2/json-rpc";
     }
 
     /**
@@ -22,7 +22,7 @@ class Version2Definition implements DefinitionInterface
      */
     public function getSandbox()
     {
-        return "http://api.sandbox.mashery.com/v2/json-rpc";
+        return "https://api.sandbox.mashery.com/v2/json-rpc";
     }
 
     /**

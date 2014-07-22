@@ -15,6 +15,20 @@ class ObjectSyncer
 {
     /**
      * @param InternalObjectInterface $object
+     * @return null
+     */
+    public static function getIdentifier(InternalObjectInterface $object)
+    {
+        $properties = self::arrayProperties($object);
+
+        return "member" === $object->getMasheryObjectType()
+            ? (isset($properties['username']) ? $properties['username'] : null)
+            : (isset($properties['id']) ? $properties['id'] : null)
+        ;
+    }
+
+    /**
+     * @param InternalObjectInterface $object
      * @return array
      */
     public static function & arrayProperties(InternalObjectInterface $object)

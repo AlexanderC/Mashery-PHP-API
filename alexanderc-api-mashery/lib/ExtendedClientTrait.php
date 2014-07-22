@@ -57,7 +57,7 @@ trait ExtendedClientTrait
     public function delete($objectType, array $parameters = [])
     {
         return $objectType instanceof InternalObjectInterface
-            ? $this->executeFromObject($objectType, 'delete', false)
+            ? $this->executeFromObject($objectType, 'delete', false, true)
             : $this->execute($objectType, 'delete', $parameters);
     }
 
@@ -102,16 +102,20 @@ trait ExtendedClientTrait
      * @param InternalObjectInterface $object
      * @param string $type
      * @param bool $withSync
-     * @return Response
+     * @param bool $onlyIdentifier
+     * @return Response|null
      */
-    protected function executeFromObject($object, $type, $withSync = true)
+    protected function executeFromObject(
+        InternalObjectInterface $object, $type,
+        $withSync = true, $onlyIdentifier = false)
     {
         $this->validateObjectType($object->getMasheryObjectType());
+        $response = null;
 
         $response = new Response(
             $this->call(
                 sprintf("%s.%s", $object->getMasheryObjectType(), $type),
-                ObjectSyncer::arrayProperties($object)
+                $onlyIdentifier ? [ObjectSyncer::getIdentifier($object)] : ObjectSyncer::arrayProperties($object)
             )
         );
 

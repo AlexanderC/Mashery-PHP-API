@@ -115,7 +115,7 @@ trait ExtendedClientTrait
         $response = new Response(
             $this->call(
                 sprintf("%s.%s", $object->getMasheryObjectType(), $type),
-                $onlyIdentifier ? [ObjectSyncer::getIdentifier($object)] : ObjectSyncer::arrayProperties($object)
+                [$onlyIdentifier ? ObjectSyncer::getIdentifier($object) : ObjectSyncer::arrayProperties($object)]
             )
         );
 

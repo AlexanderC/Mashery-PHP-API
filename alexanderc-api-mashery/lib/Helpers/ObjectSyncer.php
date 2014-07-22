@@ -9,6 +9,7 @@
 namespace AlexanderC\Api\Mashery\Helpers;
 
 
+use AlexanderC\Api\Mashery\InternalObjectCastInterface;
 use AlexanderC\Api\Mashery\InternalObjectInterface;
 
 class ObjectSyncer
@@ -39,13 +40,19 @@ class ObjectSyncer
             if ($object->masheryUseSettersAndGetters()) {
                 $getter = sprintf("get%s", Inflector::classify($objectProperty));
 
-                $properties[$masheryProperty] = $object->$getter();
+                $properties[$masheryProperty] = self::castOutgoing(
+                    $object, $objectProperty, $object->$getter()
+                );
             } else {
-                $properties[$masheryProperty] = $object->{$objectProperty};
+                $properties[$masheryProperty] = self::castOutgoing(
+                    $object, $objectProperty, $object->{$objectProperty}
+                );
             }
         }
 
-        return $properties;
+        return array_filter($properties, function($item) {
+            return is_string($item) || is_int($item) || is_bool($item) || is_array($item);
+        });
     }
 
     /**
@@ -59,9 +66,14 @@ class ObjectSyncer
             if ($object->masheryUseSettersAndGetters()) {
                 $setter = sprintf("set%s", Inflector::classify($objectProperty));
 
-                $object->$setter($data[$masheryProperty]);
+                // be sure it is available (ex. orm entity id)
+                if(method_exists($object, $setter)) {
+                    $object->$setter(
+                        self::castIncoming($object, $objectProperty, $data[$masheryProperty])
+                    );
+                }
             } else {
-                $object->{$objectProperty} = $data[$masheryProperty];
+                $object->{$objectProperty} = self::castIncoming($object, $objectProperty, $data[$masheryProperty]);
             }
         }
 
@@ -83,5 +95,55 @@ class ObjectSyncer
         }
 
         return $returnProperties;
+    }
+
+    /**
+     * @param InternalObjectInterface $object
+     * @param string $property
+     * @param mixed $value
+     * @return mixed
+     * @throws \RuntimeException
+     */
+    protected static function castIncoming(InternalObjectInterface $object, $property, $value)
+    {
+        /** @var InternalObjectCastInterface $object */
+        if($object instanceof InternalObjectCastInterface) {
+            $castMap = $object->masheryCastMapIncomingValue();
+
+            if(isset($castMap[$property])) {
+                if(!is_callable($castMap[$property])) {
+                    throw new \RuntimeException("Mashery property cast callback should be callable");
+                }
+
+                return call_user_func($castMap[$property], $value);
+            }
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param InternalObjectInterface $object
+     * @param string $property
+     * @param mixed $value
+     * @return mixed
+     * @throws \RuntimeException
+     */
+    protected static function castOutgoing(InternalObjectInterface $object, $property, $value)
+    {
+        /** @var InternalObjectCastInterface $object */
+        if($object instanceof InternalObjectCastInterface) {
+            $castMap = $object->masheryCastMapOutgoingValue();
+
+            if(isset($castMap[$property])) {
+                if(!is_callable($castMap[$property])) {
+                    throw new \RuntimeException("Mashery property cast callback should be callable");
+                }
+
+                return call_user_func($castMap[$property], $value);
+            }
+        }
+
+        return $value;
     }
 } 

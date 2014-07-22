@@ -74,13 +74,14 @@ class ObjectSyncer
      */
     protected static function & getRealPropertiesMap(InternalObjectInterface $object)
     {
+        $returnProperties = [];
         $properties = $object->getMasherySyncProperties();
 
         foreach($properties as $objectProperty => $masheryProperty) {
             // hook to check if property is not just a normal array index
-            $properties[is_string($objectProperty) ? $objectProperty : $masheryProperty] = $masheryProperty;
+            $returnProperties[is_string($objectProperty) ? $objectProperty : $masheryProperty] = $masheryProperty;
         }
 
-        return $properties;
+        return $returnProperties;
     }
 } 

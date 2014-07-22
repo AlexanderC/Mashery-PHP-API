@@ -9,6 +9,7 @@ namespace AlexanderC\Api\Mashery;
 
 
 use AlexanderC\Api\Mashery\Exception\UnknownObjectTypeException;
+use AlexanderC\Api\Mashery\Helpers\ObjectSyncer;
 
 trait ExtendedClientTrait
 {
@@ -107,18 +108,11 @@ trait ExtendedClientTrait
     {
         $this->validateObjectType($object->getMasheryObjectType());
 
-        foreach ($object->getMasherySyncProperties() as $property) {
-            if ($object->masheryUseSettersAndGetters()) {
-                $getter = sprintf("get%s", Inflector::classify($property));
-
-                $parameters[$property] = $object->$getter();
-            } else {
-                $parameters[$property] = $object->{$property};
-            }
-        }
-
         $response = new Response(
-            $this->call(sprintf("%s.%s", $object->getMasheryObjectType(), $type), $parameters)
+            $this->call(
+                sprintf("%s.%s", $object->getMasheryObjectType(), $type),
+                ObjectSyncer::arrayProperties($object)
+            )
         );
 
         if($withSync) {

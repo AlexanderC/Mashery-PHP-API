@@ -8,6 +8,7 @@
 namespace AlexanderC\Api\Mashery;
 
 use AlexanderC\Api\Mashery\Helpers\Inflector;
+use AlexanderC\Api\Mashery\Helpers\ObjectSyncer;
 
 class Response
 {
@@ -100,16 +101,7 @@ class Response
      */
     public function sync(InternalObjectInterface $object)
     {
-        foreach ($object->getMasherySyncProperties() as $property) {
-            if ($object->masheryUseSettersAndGetters()) {
-                $setter = sprintf("set%s", Inflector::classify($property));
-
-                $object->$setter($this->result[$property]);
-            } else {
-                $object->{$property} = $this->result[$property];
-            }
-        }
-
-        return $object;
+        // do not generate errors when no data...
+        ObjectSyncer::sync($object, $this->result ? : []);
     }
 }

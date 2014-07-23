@@ -11,7 +11,7 @@ namespace AlexanderC\Api\Mashery;
 
 use AlexanderC\Api\Mashery\Exception\InvalidResponseException;
 
-trait ResponseDataValidator
+trait ResponseDataValidatorTrait
 {
     /**
      * @param array $data

@@ -10,7 +10,7 @@ namespace AlexanderC\Api\Mashery;
 
 class ErrorObject
 {
-    use ResponseDataValidator;
+    use ResponseDataValidatorTrait;
 
     /**
      * @var array

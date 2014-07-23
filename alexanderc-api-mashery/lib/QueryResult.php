@@ -12,7 +12,7 @@ use AlexanderC\Api\Mashery\Helpers\Inflector;
 
 class QueryResult
 {
-    use ResponseDataValidator;
+    use ResponseDataValidatorTrait;
 
     /**
      * @var int

@@ -12,7 +12,7 @@ use AlexanderC\Api\Mashery\Helpers\ObjectSyncer;
 
 class Response
 {
-    use ResponseDataValidator;
+    use ResponseDataValidatorTrait;
 
     /**
      * @var array

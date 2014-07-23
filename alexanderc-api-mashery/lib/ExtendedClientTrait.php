@@ -10,7 +10,7 @@ namespace AlexanderC\Api\Mashery;
 
 use AlexanderC\Api\Mashery\Exception\UnknownObjectTypeException;
 use AlexanderC\Api\Mashery\Helpers\ObjectSyncer;
-use JsonRpc\Base\Response;
+use AlexanderC\Api\Mashery\Response;
 
 trait ExtendedClientTrait
 {

@@ -77,7 +77,7 @@ trait ExtendedClientTrait
         // returned result differes from docs:
         // http://support.mashery.com/docs/read/mashery_api/20/Validating_Fields
         $responseResult = $response->getResult();
-        if(!$response->isError() && !empty($responseResult)) {
+        if(!$response->isError() && true !== $responseResult) {
             return new Response(
                 [
                     'result' => null,

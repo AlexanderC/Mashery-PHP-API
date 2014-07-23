@@ -10,6 +10,7 @@ namespace AlexanderC\Api\Mashery;
 
 use AlexanderC\Api\Mashery\Exception\UnknownObjectTypeException;
 use AlexanderC\Api\Mashery\Helpers\ObjectSyncer;
+use JsonRpc\Base\Response;
 
 trait ExtendedClientTrait
 {
@@ -71,6 +72,23 @@ trait ExtendedClientTrait
         $response = $objectType instanceof InternalObjectInterface
             ? $this->executeFromObject($objectType, 'validate', false)
             : $this->execute($objectType, 'validate', $parameters);
+
+        // TODO: figure out what's with mashery response!
+        // returned result differes from docs:
+        // http://support.mashery.com/docs/read/mashery_api/20/Validating_Fields
+        $responseResult = $response->getResult();
+        if(!$response->isError() && !empty($responseResult)) {
+            return new Response(
+                [
+                    'result' => null,
+                    'error' => [
+                        'message' => 'Invalid Object',
+                        'code' => 1000,
+                        'data' => $responseResult
+                    ],
+                    'id' => $response->getId()
+                ]);
+        }
 
         return $response;
     }

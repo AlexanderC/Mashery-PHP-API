@@ -14,8 +14,6 @@ use AlexanderC\Api\Mashery\Transport\Exception\AuthorizationException;
 
 abstract class AbstractTransport
 {
-    const CLIENT_STRING = 'alexanderc_api_call/0.1b';
-
     /**
      * @var Credentials
      */
@@ -37,6 +35,11 @@ abstract class AbstractTransport
     protected $init = false;
 
     /**
+     * @var string
+     */
+    protected $client = 'alexanderc_api_call/0.1b';
+
+    /**
      * @param Credentials $credentials
      * @param DefinitionInterface $definition
      * @param TransformerInterface $transformer
@@ -51,6 +54,22 @@ abstract class AbstractTransport
         $this->transformer = $transformer;
 
         $this->init = true;
+    }
+
+    /**
+     * @param string $client
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClient()
+    {
+        return $this->client;
     }
 
     /**
@@ -75,7 +94,7 @@ abstract class AbstractTransport
 
         $headers = [
             'Content-Type: application/json',
-            'X-Api-Client: ' . self::CLIENT_STRING,
+            'X-Api-Client: ' . $this->client,
             'Content-Length: ' . strlen($body) . "\r\n",
             $body
         ];

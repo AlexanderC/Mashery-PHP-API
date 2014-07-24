@@ -60,15 +60,20 @@ class Client
     /**
      * @param string $method
      * @param array $parameters
+     * @param array $additionalOptions
      * @return array
      */
-    public function call($method, array $parameters)
+    public function call($method, array $parameters, array $additionalOptions = null)
     {
         $data = [
             'id' => 1, // it is not that important since it's using syncronous calls
             'method' => $method,
             'params' => $parameters
         ];
+
+        if(null !== $additionalOptions) {
+            $data = array_merge($data, $additionalOptions);
+        }
 
         return $this->transport->request($data, $this->sandboxMode);
     }

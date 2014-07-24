@@ -106,13 +106,18 @@ trait ExtendedClientTrait
      * @param string $objectType
      * @param string $type
      * @param array $parameters
+     * @param array $additionalOptions
      * @return Response
      */
-    protected function execute($objectType, $type, array $parameters = [])
+    public function execute($objectType, $type, array $parameters = [], array $additionalOptions = null)
     {
         $this->validateObjectType($objectType);
 
-        return new Response($this->call(sprintf("%s.%s", $objectType, $type), $parameters));
+        if(null === $additionalOptions) {
+            return new Response($this->call(sprintf("%s.%s", $objectType, $type), $parameters));
+        }
+
+        return new Response($this->call(sprintf("%s.%s", $objectType, $type), $parameters, $additionalOptions));
     }
 
     /**

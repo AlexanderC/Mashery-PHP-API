@@ -24,8 +24,9 @@ Usage
      * `Response update(string|InternalObjectInterface $objectType, array $parameters = [])`
      * `Response delete(string|InternalObjectInterface $objectType, array $parameters = [])`
      * `Response validate(string|InternalObjectInterface $objectType, array $parameters = [])`
+     * `Response execute(string $objectType, string $type, array $parameters = [], array $additionalOptions = null)`
      * `QueryResponse query(string|MsrQL $query)`
-     * `array call(string $method, array $parameters)`
+     * `array call(string $method, array $parameters, array $additionalOptions = null)`
 
 - MsrQL Methods (Mashery Query Language)
      * `MsrQL select(string $selector)`
@@ -59,40 +60,10 @@ $application = 'alexanderc';
 $transportName = 'curl'; // default value
 $version = 'version2'; // default value
 
-class TestObject implements \AlexanderC\Api\Mashery\InternalObjectInterface
-{
-    public $name;
-
-    public function getMasherySyncProperties()
-    {
-        return ['name'];
-    }
-
-    public function getMasheryObjectType()
-    {
-        return 'role';
-    }
-
-    public function masheryUseSettersAndGetters()
-    {
-        return false;
-    }
-}
-
 try {
     $mashery = AlexanderC\Api\Mashery\Mashery::createInstance(
         $apiKey, $secret, $application, $transportName, $version
     );
-
-    $testObj = new TestObject();
-    $testObj->name = 'testit';
-
-    // create object first
-    $response = $mashery->create($testObj);
-
-    if($response->isError()) {
-        throw new \RuntimeException("Unable to create mashery object: {$response->getError()->getMessage()}");
-    }
 
     // also you can use Mashery SQL like language for custom queries
     // or build it using MsrQL class

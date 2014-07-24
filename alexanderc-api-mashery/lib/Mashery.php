@@ -15,8 +15,9 @@ use AlexanderC\Api\Mashery\Transport\AbstractTransport;
  * @method Response update(string $objectType, array $parameters = [])
  * @method Response delete(string $objectType, array $parameters = [])
  * @method Response validate(string $objectType, array $parameters = [])
+ * @method Response execute(string $objectType, string $type, array $parameters = [], array $additionalOptions = null)
  * @method QueryResponse query(string $query)
- * @method array call(string $method, array $parameters)
+ * @method array call(string $method, array $parameters, array $additionalOptions = null)
  */
 class Mashery
 {

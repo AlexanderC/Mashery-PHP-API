@@ -26,7 +26,16 @@ interface InternalObjectInterface
     public function getMasheryObjectType();
 
     /**
+     * Use getters and setters instead of direct property access
+     *
      * @return bool
      */
     public function masheryUseSettersAndGetters();
+
+    /**
+     * Do not sync this properties back into the entity object
+     *
+     * @return
+     */
+    public function getMasheryNoReverseSyncProperties();
 } 

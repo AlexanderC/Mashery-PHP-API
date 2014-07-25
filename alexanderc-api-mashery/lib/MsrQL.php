@@ -244,7 +244,11 @@ class MsrQL
 
         $this->validateConditionalExpression($expression);
 
-        $this->requireRelatedTable = $object;
+        $this->requireRelatedTable = Inflector::pluralize(
+            $object instanceof InternalObjectInterface
+                ? $object->getMasheryObjectType()
+                : (string) $object
+        );
         $this->requireRelatedExpression = $expression;
 
         return $this;

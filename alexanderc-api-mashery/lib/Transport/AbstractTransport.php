@@ -94,8 +94,8 @@ abstract class AbstractTransport
 
         $headers = [
             'Content-Type: application/json',
-            'X-Api-Client: ' . $this->client,
-            'Content-Length: ' . strlen($body) . "\r\n",
+            sprintf('X-Api-Client: %s', $this->client),
+            sprintf("Content-Length: %d\r\n", strlen($body)),
             $body
         ];
 

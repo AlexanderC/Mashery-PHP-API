@@ -46,7 +46,7 @@ trait ExtendedClientTrait
     public function update($objectType, array $parameters = [])
     {
         return $objectType instanceof InternalObjectInterface
-            ? $this->executeFromObject($objectType, 'update')
+            ? $this->executeFromObject($objectType, 'update', false, false, true)
             : $this->execute($objectType, 'update', $parameters);
     }
 
@@ -64,13 +64,14 @@ trait ExtendedClientTrait
 
     /**
      * @param string|InternalObjectInterface $objectType
+     * @param bool $preUpdate
      * @param array $parameters
-     * @return Response
+     * @return Response|null
      */
-    public function validate($objectType, array $parameters = [])
+    public function validate($objectType, $preUpdate = false, array $parameters = [])
     {
         $response = $objectType instanceof InternalObjectInterface
-            ? $this->executeFromObject($objectType, 'validate', false)
+            ? $this->executeFromObject($objectType, 'validate', false, false, (bool) $preUpdate)
             : $this->execute($objectType, 'validate', $parameters);
 
         // TODO: figure out what's with mashery response!
@@ -125,11 +126,13 @@ trait ExtendedClientTrait
      * @param string $type
      * @param bool $withSync
      * @param bool $onlyIdentifier
+     * @param bool $skipUpdateFields
      * @return Response|null
      */
     protected function executeFromObject(
         InternalObjectInterface $object, $type,
-        $withSync = true, $onlyIdentifier = false)
+        $withSync = true, $onlyIdentifier = false,
+        $skipUpdateFields = false)
     {
         $this->validateObjectType($object->getMasheryObjectType());
         $response = null;
@@ -139,7 +142,7 @@ trait ExtendedClientTrait
         if($onlyIdentifier) {
             $parameters = ObjectSyncer::getIdentifier($object);
         } else {
-            $parameters = ObjectSyncer::arrayProperties($object, 'update' === $type);
+            $parameters = ObjectSyncer::arrayProperties($object, $skipUpdateFields);
         }
 
         $response = new Response(

@@ -30,16 +30,16 @@ class ObjectSyncer
 
     /**
      * @param InternalObjectInterface $object
-     * @param bool $isUpdate
+     * @param bool $skipUpdateFields
      * @return array
      */
-    public static function arrayProperties(InternalObjectInterface $object, $isUpdate = false)
+    public static function arrayProperties(InternalObjectInterface $object, $skipUpdateFields = false)
     {
         $properties = [];
 
         foreach (self::getRealPropertiesMap($object) as $objectProperty => $masheryProperty) {
             // skip required fields on update
-            if($isUpdate && in_array($objectProperty, $object->getMasheryFieldsToSkipOnUpdate())) {
+            if($skipUpdateFields && in_array($objectProperty, $object->getMasheryFieldsToSkipOnUpdate())) {
                 continue;
             }
 

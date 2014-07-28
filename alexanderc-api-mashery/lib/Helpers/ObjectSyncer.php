@@ -30,13 +30,19 @@ class ObjectSyncer
 
     /**
      * @param InternalObjectInterface $object
+     * @param bool $isUpdate
      * @return array
      */
-    public static function arrayProperties(InternalObjectInterface $object)
+    public static function arrayProperties(InternalObjectInterface $object, $isUpdate = false)
     {
         $properties = [];
 
         foreach (self::getRealPropertiesMap($object) as $objectProperty => $masheryProperty) {
+            // skip required fields on update
+            if($isUpdate && in_array($objectProperty, $object->getMasheryFieldsToSkipOnUpdate())) {
+                continue;
+            }
+
             if ($object->masheryUseSettersAndGetters()) {
                 $getter = sprintf("get%s", Inflector::classify($objectProperty));
 

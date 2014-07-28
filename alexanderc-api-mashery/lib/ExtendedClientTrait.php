@@ -134,10 +134,18 @@ trait ExtendedClientTrait
         $this->validateObjectType($object->getMasheryObjectType());
         $response = null;
 
+        $parameters = null;
+
+        if($onlyIdentifier) {
+            $parameters = ObjectSyncer::getIdentifier($object);
+        } else {
+            $parameters = ObjectSyncer::arrayProperties($object, 'update' === $type);
+        }
+
         $response = new Response(
             $this->call(
                 sprintf("%s.%s", $object->getMasheryObjectType(), $type),
-                [$onlyIdentifier ? ObjectSyncer::getIdentifier($object) : ObjectSyncer::arrayProperties($object)]
+                [$parameters]
             )
         );
 

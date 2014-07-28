@@ -35,7 +35,12 @@ interface InternalObjectInterface
     /**
      * Do not sync this properties back into the entity object
      *
-     * @return
+     * @return array
      */
     public function getMasheryNoReverseSyncProperties();
+
+    /**
+     * @return mixed
+     */
+    public function getMasheryFieldsToSkipOnUpdate();
 } 

@@ -40,7 +40,7 @@ interface InternalObjectInterface
     public function getMasheryNoReverseSyncProperties();
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getMasheryFieldsToSkipOnUpdate();
 } 

@@ -33,7 +33,7 @@ class ObjectSyncer
      * @param bool $skipUpdateFields
      * @return array
      */
-    public static function & getOrmPropertiesMap(InternalObjectInterface $object, $skipUpdateFields = false)
+    public static function & getObjectPropertiesMap(InternalObjectInterface $object, $skipUpdateFields = false)
     {
         $properties = [];
 

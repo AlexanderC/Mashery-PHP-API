@@ -75,7 +75,8 @@ class Version2Definition implements DefinitionInterface
         return [
             'member', 'application', 'key',
             'package_key', 'package', 'plan',
-            'service', 'role', 'developer_class'
+            'service', 'role', 'developer_class',
+            'plan_endpoint'
         ];
     }
 }

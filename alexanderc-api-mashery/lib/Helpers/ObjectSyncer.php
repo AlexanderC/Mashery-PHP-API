@@ -78,7 +78,7 @@ class ObjectSyncer
         }
 
         return array_filter($properties, function($item) {
-            return is_string($item) || is_int($item) || is_bool($item) || is_array($item);
+            return is_scalar($item) || is_array($item);
         });
     }
 
